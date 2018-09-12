@@ -13,7 +13,7 @@ public class LoginTest extends TestBase{
 		homepage.Login(userName, password);
 	}
 	
-	@Test(dataProvider="loginData",dataProviderClass=testdata.Login.class)
+	@Test(dataProvider="loginData",dataProviderClass=testdata.Login.class,enabled=false)
 	public void Login1(String userName, String password) {
 		HomePage homepage = new HomePage();
 		homepage.Login(userName, password);

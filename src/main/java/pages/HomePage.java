@@ -1,5 +1,7 @@
 package pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,6 +15,8 @@ public class HomePage {
 	
 	WebDriver driver = TestBase.getDriver();
 	WebDriverWait wait;
+	
+	//private static final Logger LOGGER= LogManager.getLogger();
 	
 	public HomePage() {
 		PageFactory.initElements(driver, this);
@@ -33,12 +37,14 @@ public class HomePage {
 	private WebElement btnSignIn; 
 	
 	public HomePage typeUserName(String txt) {
+		//LOGGER.info("waiting for the visibility of the Username field");
 		wait.until(ExpectedConditions.visibilityOf(txtUserName));
 		txtUserName.sendKeys(txt);
 		return this;
 	}
 	
 	public HomePage typePassword(String txt) {
+		//LOGGER.info("Type the password in the field");
 		txtPassword.sendKeys(txt);
 		return this;
 	}

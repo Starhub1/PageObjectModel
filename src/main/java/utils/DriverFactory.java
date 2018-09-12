@@ -10,12 +10,15 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 public class DriverFactory {
+	private EventFiringWebDriver edriver;
 	private WebDriver driver;
+	private WebDriverListener listener;
 
 	public WebDriver getDriver() {
-		return driver;
+		return edriver;
 	}
 
 	public DriverFactory() {
@@ -45,10 +48,14 @@ public class DriverFactory {
 		int pageLoadTimeout = Integer.valueOf(prop.getProperty("pageLoadTimeout", "60"));
 		int scriptTimeOut = Integer.valueOf(prop.getProperty("scriptTimeOut", "60"));
 		String url = prop.getProperty("url");
-				
+
 		driver.manage().timeouts().pageLoadTimeout(pageLoadTimeout, TimeUnit.SECONDS);
 		driver.manage().timeouts().setScriptTimeout(scriptTimeOut, TimeUnit.MICROSECONDS);
-		driver.get(url);
+		edriver = new EventFiringWebDriver(driver);
+		listener = new WebDriverListener();
+		edriver.register(listener);
+		
+		
 	}
 
 }
