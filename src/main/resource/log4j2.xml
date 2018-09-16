@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Don't forget to set system property -Dlog4j2.contextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector 
+	to make all loggers asynchronous. -->
+
+<Configuration status="WARN">
+	<Appenders>
+		<!-- Async Loggers will auto-flush in batches, so switch off immediateFlush. -->
+		<RandomAccessFile name="RandomAccessFile"
+			fileName="async.log" immediateFlush="false" append="false">
+			<PatternLayout>
+				<Pattern>%d %5p [%t %tid] (%F:%L) - %m%n
+				</Pattern>
+			</PatternLayout>
+		</RandomAccessFile>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout>
+				<Pattern>%d %5p [%t %tid] (%F:%L) - %m%n
+				</Pattern>
+			</PatternLayout>
+		</Console>
+	</Appenders>
+	<Loggers>
+		<Root level="info" includeLocation="false">
+			<AppenderRef ref="RandomAccessFile" />
+			<AppenderRef ref="console"/>
+		</Root>
+	</Loggers>
+</Configuration>

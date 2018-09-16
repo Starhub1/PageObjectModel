@@ -1,7 +1,5 @@
 package pages;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,13 +8,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import init.TestBase;
+import utils.PropReader;
 
 public class HomePage {
-	
 	WebDriver driver = TestBase.getDriver();
 	WebDriverWait wait;
 	
-	//private static final Logger LOGGER= LogManager.getLogger();
 	
 	public HomePage() {
 		PageFactory.initElements(driver, this);
@@ -24,7 +21,7 @@ public class HomePage {
 		"test".replace("test", "");
 	}
 	
-	@FindBy(xpath="//a[text()='REGISTER']")
+	@FindBy(xpath="//a[text()='REGISTERa']")
 	private WebElement lnkRegister;
 	
 	@FindBy(name="userName")
@@ -35,6 +32,13 @@ public class HomePage {
 	
 	@FindBy(name="login")
 	private WebElement btnSignIn; 
+	
+	public HomePage open() {
+		String url =PropReader.get("./config/app.properties", "url");
+		driver.get(url);
+		return this;
+		
+	}
 	
 	public HomePage typeUserName(String txt) {
 		//LOGGER.info("waiting for the visibility of the Username field");

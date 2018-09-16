@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -17,7 +18,7 @@ public class DriverFactory {
 	private WebDriver driver;
 	private WebDriverListener listener;
 
-	public WebDriver getDriver() {
+	public EventFiringWebDriver getDriver() {
 		return edriver;
 	}
 
@@ -26,15 +27,8 @@ public class DriverFactory {
 	}
 
 	public void initializeDriver() {
-		Properties prop = new Properties();
-		try {
-			prop.load(new FileInputStream(new File("./config/app.properties")));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		String browser = prop.getProperty("browser");
+		String path = "./config/app.properties";
+		String browser = PropReader.get(path, "browser");
 		switch (browser.toLowerCase()) {
 
 		case "chrome":
@@ -45,17 +39,14 @@ public class DriverFactory {
 			driver = new ChromeDriver(options);
 			break;
 		}
-		int pageLoadTimeout = Integer.valueOf(prop.getProperty("pageLoadTimeout", "60"));
-		int scriptTimeOut = Integer.valueOf(prop.getProperty("scriptTimeOut", "60"));
-		String url = prop.getProperty("url");
-
+		int pageLoadTimeout = Integer.valueOf(PropReader.get(path, "pageLoadTimeout"));
+		int scriptTimeOut = Integer.valueOf(PropReader.get(path, "scriptTimeOut"));
 		driver.manage().timeouts().pageLoadTimeout(pageLoadTimeout, TimeUnit.SECONDS);
 		driver.manage().timeouts().setScriptTimeout(scriptTimeOut, TimeUnit.MICROSECONDS);
 		edriver = new EventFiringWebDriver(driver);
 		listener = new WebDriverListener();
 		edriver.register(listener);
-		
-		
+
 	}
 
 }

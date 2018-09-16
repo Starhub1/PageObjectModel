@@ -8,19 +8,18 @@ import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 
 import init.TestBase;
+import reports.AppLogger;
 
 public class TestListener extends TestListenerAdapter{
 
 	@Override
 	public void onTestSuccess(ITestResult tr) {
-		// TODO Auto-generated method stub
-		super.onTestSuccess(tr);
+		AppLogger.logInfo(tr.getClass(), "TestCase Passed");
 	}
 
 	@Override
 	public void onTestFailure(ITestResult tr) {
-		// TODO Auto-generated method stub
-		super.onTestFailure(tr);
+		AppLogger.logFatal(tr.getClass(), "Exception Thrown",tr.getThrowable());
 	}
 
 	@Override
@@ -109,7 +108,7 @@ public class TestListener extends TestListenerAdapter{
 
 	@Override
 	public void onTestStart(ITestResult result) {
-		// TODO Auto-generated method stub
+		AppLogger.logInfo(result.getClass(), "Testing"+result.getName()+"....................................................");
 		super.onTestStart(result);
 	}
 
