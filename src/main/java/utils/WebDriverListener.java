@@ -80,7 +80,7 @@ public class WebDriverListener extends AbstractWebDriverEventListener{
 
 	@Override
 	public void afterClickOn(WebElement element, WebDriver driver) {
-			AppLogger.logInfo(element.getClass(), "Clicked on the element "+ element);
+			AppLogger.logInfo(element.getClass().getSuperclass(), "Clicked on the element "+ element);
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public class WebDriverListener extends AbstractWebDriverEventListener{
 
 	@Override
 	public void onException(Throwable throwable, WebDriver driver) {
-		AppLogger.logFatal(driver.getClass(), "Exception Thrown", throwable);
+		//AppLogger.logFatal(driver.getClass(), "Exception Thrown", throwable);
 	}
 
 	@Override
