@@ -1,72 +1,81 @@
 package utils;
 
-import java.util.List;
-
+import org.apache.logging.log4j.LogManager;
 import org.testng.ITestContext;
-import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 
-import init.TestBase;
-import reports.AppLogger;
+public class TestListener extends TestListenerAdapter {
 
-public class TestListener extends TestListenerAdapter{
+	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger("TestListener");
+	String message;
 
 	@Override
 	public void onTestSuccess(ITestResult tr) {
-		AppLogger.logInfo(tr.getInstance().getClass(), "TestCase PASSED");
+		message = String.format("[%s] : %s", tr.getInstance().getClass(),
+				"############# TestCase PASSED ###############");
+		logger.info(message);
 	}
 
 	@Override
 	public void onTestFailure(ITestResult tr) {
-		AppLogger.logFatal(tr.getInstance().getClass(), "EXCEPTION Thrown",tr.getThrowable());
+		message = String.format("[%s] : %s", tr.getInstance().getClass(),
+				"############# EXCEPTION THROWN ###############");
+		logger.info(message, tr.getThrowable());
 	}
 
 	@Override
 	public void onTestSkipped(ITestResult tr) {
-		AppLogger.logInfo(tr.getInstance().getClass(), "TestCase SKIPPED");
+		message = String.format("[%s] : %s", tr.getInstance().getClass(),
+				"############# TestCase SKIPPED ###############");
+		logger.info(message, tr.getThrowable());
 	}
 
-	
 	@Override
 	public void onTestStart(ITestResult result) {
-		
-		AppLogger.logInfo(result.getInstance().getClass(), "Testing "+result.getName()+"....................................................");
-		super.onTestStart(result);
+		message = String.format("[%s] : %s", result.getInstance().getClass(),
+				"Testing " + result.getName() + " ###############");
+		logger.info(message);
 	}
-
 
 	@Override
 	public void onConfigurationFailure(ITestResult itr) {
-		AppLogger.logInfo(itr.getInstance().getClass(), "Configuration FAILED");
+		/*
+		 * message = String.format("[%s] : %s", itr.getInstance().getClass(),
+		 * "############# Configuration Failed ###############");
+		 * logger.info(message,itr.getThrowable());
+		 */
 	}
-
 
 	@Override
 	public void onConfigurationSkip(ITestResult itr) {
-		AppLogger.logInfo(itr.getInstance().getClass(), "Configuration SKIPPED");
+		/*
+		 * message = String.format("[%s] : %s", itr.getInstance().getClass(),
+		 * "############# Configuration SKIPPED ###############");
+		 * logger.info(message,itr.getThrowable());
+		 */
 	}
 
 	@Override
 	public void onConfigurationSuccess(ITestResult itr) {
-		AppLogger.logInfo(itr.getInstance().getClass(), "Configuration SUCCESS");
+		/*
+		 * message = String.format("[%s] : %s", itr.getInstance().getClass(),
+		 * "############# Configuration Success ###############"); logger.info(message);
+		 */
 	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return super.toString();
 	}
-	
+
 	@Override
 	public void onStart(ITestContext testContext) {
-		// TODO Auto-generated method stub
 		super.onStart(testContext);
 	}
 
 	@Override
 	public void onFinish(ITestContext testContext) {
-		// TODO Auto-generated method stub
 		super.onFinish(testContext);
 	}
 

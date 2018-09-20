@@ -1,28 +1,35 @@
 package utils;
 
+import java.util.Arrays;
+
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
 
-import init.TestBase;
-import reports.AppLogger;
+public class WebDriverListener extends AbstractWebDriverEventListener {
 
-public class WebDriverListener extends AbstractWebDriverEventListener{
+	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger("WebListener");
 
 	@Override
 	public void beforeAlertAccept(WebDriver driver) {
+		String message = String.format("[%s] : %s", driver.getClass(), "Before Alert Accept");
+		logger.info(message);
 	}
 
 	@Override
 	public void afterAlertAccept(WebDriver driver) {
-		AppLogger.logInfo(driver.getClass(), "Alert Accepted");
+		String message = String.format("[%s] : %s", driver.getClass(), "Alert Accepted");
+		logger.info(message);
 	}
 
 	@Override
 	public void afterAlertDismiss(WebDriver driver) {
-		AppLogger.logInfo(driver.getClass(), "Alert Dissmissed");
+		String message = String.format("[%s] : %s", driver.getClass(), "Alert Dissmissed");
+		logger.info(message);
 	}
 
 	@Override
@@ -31,12 +38,15 @@ public class WebDriverListener extends AbstractWebDriverEventListener{
 
 	@Override
 	public void beforeNavigateTo(String url, WebDriver driver) {
-		
+		String message = String.format("[%s] : %s", driver.getClass(), "Navigating to the URL : " + url);
+		logger.info(message);
+
 	}
 
 	@Override
 	public void afterNavigateTo(String url, WebDriver driver) {
-		AppLogger.logInfo(driver.getClass(), "Navigated to the URL"+ url);
+		String message = String.format("[%s] : %s", driver.getClass(), "Successfuly navigated to the URL : " + url);
+		logger.info(message);
 	}
 
 	@Override
@@ -65,22 +75,28 @@ public class WebDriverListener extends AbstractWebDriverEventListener{
 
 	@Override
 	public void beforeFindBy(By by, WebElement element, WebDriver driver) {
-			AppLogger.logInfo(by.getClass(), "Finding the element "+ by);
+		String message = String.format("[%s] : %s", by.getClass(), "Finding the element " + by.toString());
+		logger.info(message);
 	}
 
 	@Override
 	public void afterFindBy(By by, WebElement element, WebDriver driver) {
-			AppLogger.logInfo(by.getClass(), "Found the element "+ by);
+		String message = String.format("[%s] : %s", by.getClass(), "Found the element " + by.toString());
+		logger.info(message);
 	}
 
 	@Override
 	public void beforeClickOn(WebElement element, WebDriver driver) {
-			AppLogger.logInfo(element.getClass(), "Clicking on the element "+ element);
+		String message = String.format("[%s] : %s", element.getClass(),
+				"Trying to Click on the element : " + element.toString().replaceAll("\\[.*\\]\\s->\\s+", ""));
+		logger.info(message);
 	}
 
 	@Override
 	public void afterClickOn(WebElement element, WebDriver driver) {
-			AppLogger.logInfo(element.getClass().getSuperclass(), "Clicked on the element "+ element);
+		String message = String.format("[%s] : %s", element.getClass(),
+				"Clicked on the element :  " + element.toString().replaceAll("\\[.*\\]\\s->\\s+", ""));
+		logger.info(message);
 	}
 
 	@Override
@@ -90,7 +106,10 @@ public class WebDriverListener extends AbstractWebDriverEventListener{
 
 	@Override
 	public void afterChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
-		AppLogger.logInfo(element.getClass(), "Navigated to the URL");
+		// System.out.println(Arrays.stream(keysToSend).map(s->s.toString()));
+		String message = String.format("[%s] : %s", driver.getClass(), "Value Entered in the element : "
+				+ element.toString().replaceAll("\\[.*\\]\\s->\\s+", "") + "is " + Arrays.toString(keysToSend));
+		logger.info(message);
 	}
 
 	@Override
@@ -111,7 +130,6 @@ public class WebDriverListener extends AbstractWebDriverEventListener{
 
 	@Override
 	public void onException(Throwable throwable, WebDriver driver) {
-		//AppLogger.logFatal(driver.getClass(), "Exception Thrown", throwable);
 	}
 
 	@Override

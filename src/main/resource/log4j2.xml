@@ -5,25 +5,38 @@
 
 <Configuration status="WARN">
 	<Appenders>
-		<!-- Async Loggers will auto-flush in batches, so switch off immediateFlush. -->
-		<RandomAccessFile name="RandomAccessFile"
-			fileName="async.log" immediateFlush="false" append="false">
+
+		<File name="WebListenerApender" fileName="logs/drivers.log" append="false">
 			<PatternLayout>
-				<Pattern>%d %5p [%t %tid] (%F:%L) - %m%n
-				</Pattern>
+				<Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
 			</PatternLayout>
-		</RandomAccessFile>
+		</File>
+
+		<File name="TestListenerAppender" fileName="logs/tests.log" append="false">
+			<PatternLayout>
+				<Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+			</PatternLayout>
+		</File>
+
 		<Console name="console" target="SYSTEM_OUT">
 			<PatternLayout>
-				<Pattern>%d %5p [%t %tid] (%F:%L) - %m%n
+				<Pattern>%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n
 				</Pattern>
 			</PatternLayout>
 		</Console>
 	</Appenders>
+
 	<Loggers>
+		<Logger name="WebListener" level="debug" additivity="false">
+			<AppenderRef ref="WebListenerApender" />
+			<AppenderRef ref="console" />
+		</Logger>
+		<Logger name="TestListener" level="debug" additivity="false">
+			<AppenderRef ref="WebListenerApender" />
+			<AppenderRef ref="TestListenerAppender" />
+			<AppenderRef ref="console" />
+		</Logger>
 		<Root level="info" includeLocation="false">
-			<AppenderRef ref="RandomAccessFile" />
-			<AppenderRef ref="console"/>
 		</Root>
 	</Loggers>
 </Configuration>

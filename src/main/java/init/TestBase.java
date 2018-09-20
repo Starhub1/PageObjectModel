@@ -31,9 +31,8 @@ public class TestBase {
 
 	}
 
-	@BeforeMethod(alwaysRun=true)
+	@BeforeMethod()
 	public void setUp(ITestResult it) {
-		logger.set(ReportManager.startTest(it.getName()));
 		driver.set(new DriverFactory().getDriver());
 	}
 

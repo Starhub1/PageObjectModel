@@ -12,14 +12,15 @@ public class RegisterTest extends TestBase {
 	
 	
 	
-	@Test(testName="testldfjdls")
+	@Test()
 	public void testNewRegistrationThenLogin() {
-		logger.get().log(LogStatus.INFO, "Addin a testcase");
 		
+		logger.set(ReportManager.startTest("testNewRegistrationThenLogin"));
 		HomePage homePage = new HomePage();
-		homePage.
-		open().
-		clickRegister()
+		
+		homePage
+		.open()
+		.clickRegister()
 		.Register("test", "password").clickSignIn().Login("test", "password");
 		
 	}
