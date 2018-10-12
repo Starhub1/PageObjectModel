@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite" data-provider-thread-count="2">
+	<listeners>
+		<listener class-name="utils.TestListener" />
+	</listeners>
+	<test thread-count="5" name="Test">
+		<groups>
+			<run>
+				<include name="Link_Sprint22" />
+			</run>
+		</groups>
+		<packages>
+			<package name="testcases" />
+		</packages>
+	</test> <!-- Test -->
+</suite> <!-- Suite -->

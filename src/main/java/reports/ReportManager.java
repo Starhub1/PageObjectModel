@@ -3,8 +3,6 @@ package reports;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Date;
 import java.util.Locale;
 
@@ -18,11 +16,15 @@ public class ReportManager {
 	
 	private static ExtentReports reports;
 	
+	private static String fileName = "./test reports/Excecution Report " + getCurrentDateTime() + "/index.html";
+	
+	public static String getPath() {
+		return fileName;
+	}
 
 	public static void init() {
 	 
 		if (reports == null) {
-			String fileName = "./test reports/Excecution Report " + getCurrentDateTime() + "/index.html";		
 			try {
 				FileUtils.touch(new File(fileName));
 			} catch (IOException e) {
@@ -33,11 +35,11 @@ public class ReportManager {
 		}
 	}
 
-	public static ExtentTest startTest(String testcaseName) {
+	public synchronized static ExtentTest startTest(String testcaseName) {
 		return reports.startTest(testcaseName);
 	}
 
-	public static void endTest(ExtentTest test) {
+	public synchronized static void endTest(ExtentTest test) {
 		reports.endTest(test);
 		reports.flush();
 	}

@@ -8,19 +8,19 @@
 
 		<File name="WebListenerApender" fileName="logs/drivers.log" append="false">
 			<PatternLayout>
-				<Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+				<Pattern>%d %p %c{1.} [%t %tid] %m%n</Pattern>
 			</PatternLayout>
 		</File>
 
 		<File name="TestListenerAppender" fileName="logs/tests.log" append="false">
 			<PatternLayout>
-				<Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+				<Pattern>%d %p %c{1.} [%t %tid] %m%n</Pattern>
 			</PatternLayout>
 		</File>
 
 		<Console name="console" target="SYSTEM_OUT">
 			<PatternLayout>
-				<Pattern>%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n
+				<Pattern>%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t %tid] %C{2} (%F:%L) - %m%n
 				</Pattern>
 			</PatternLayout>
 		</Console>
@@ -29,12 +29,12 @@
 	<Loggers>
 		<Logger name="WebListener" level="debug" additivity="false">
 			<AppenderRef ref="WebListenerApender" />
-			<AppenderRef ref="console" />
+			<!-- <AppenderRef ref="console" /> -->
 		</Logger>
 		<Logger name="TestListener" level="debug" additivity="false">
 			<AppenderRef ref="WebListenerApender" />
 			<AppenderRef ref="TestListenerAppender" />
-			<AppenderRef ref="console" />
+			<!-- <AppenderRef ref="console" /> -->
 		</Logger>
 		<Root level="info" includeLocation="false">
 		</Root>

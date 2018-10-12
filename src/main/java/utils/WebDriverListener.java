@@ -2,7 +2,6 @@ package utils;
 
 import java.util.Arrays;
 
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -88,14 +87,14 @@ public class WebDriverListener extends AbstractWebDriverEventListener {
 	@Override
 	public void beforeClickOn(WebElement element, WebDriver driver) {
 		String message = String.format("[%s] : %s", element.getClass(),
-				"Trying to Click on the element : " + element.toString().replaceAll("\\[.*\\]\\s->\\s+", ""));
+				"Trying to Click on the element : " + element.toString().replaceAll(".*->", ""));
 		logger.info(message);
 	}
 
 	@Override
 	public void afterClickOn(WebElement element, WebDriver driver) {
 		String message = String.format("[%s] : %s", element.getClass(),
-				"Clicked on the element :  " + element.toString().replaceAll("\\[.*\\]\\s->\\s+", ""));
+				"Clicked on the element :  " + element.toString().replaceAll(".*->", ""));
 		logger.info(message);
 	}
 
@@ -108,7 +107,7 @@ public class WebDriverListener extends AbstractWebDriverEventListener {
 	public void afterChangeValueOf(WebElement element, WebDriver driver, CharSequence[] keysToSend) {
 		// System.out.println(Arrays.stream(keysToSend).map(s->s.toString()));
 		String message = String.format("[%s] : %s", driver.getClass(), "Value Entered in the element : "
-				+ element.toString().replaceAll("\\[.*\\]\\s->\\s+", "") + "is " + Arrays.toString(keysToSend));
+				+ element.toString().replaceAll(".*->", "") + "is " + Arrays.toString(keysToSend));
 		logger.info(message);
 	}
 
